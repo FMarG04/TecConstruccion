@@ -139,8 +139,27 @@ Abre en el navegador:
 http://localhost:5000
 ```
 
-
-
-
-
 La aplicacion se inicia en `http://localhost:5000` y muestra el inventario de productos.
+
+
+### Pruebas:
+
+### inicio:
+
+![Pantalla inicio](img/principal.png)
+
+### crear:
+
+![Pantalla crear](img/crear.png)
+
+### editar:
+
+![Pantalla editar](img/editar.png)
+
+### actualizado:
+
+![Pantalla actualizado](img/actualizado.png)
+
+### eliminar:
+
+![Pantalla eliminar](img/eliminar.png)
