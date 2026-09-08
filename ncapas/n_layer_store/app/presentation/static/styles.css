@@ -201,6 +201,34 @@ th {
     justify-content: flex-end;
 }
 
+.row-actions form,
+.tax-form {
+    display: flex;
+    gap: 8px;
+}
+
+.row-actions input {
+    width: 92px;
+    min-height: 40px;
+}
+
+.summary {
+    margin: -4px 0 16px;
+    color: var(--muted);
+}
+
+.calculator {
+    margin-top: 20px;
+}
+
+.tax-form {
+    align-items: center;
+}
+
+.tax-form input {
+    max-width: 200px;
+}
+
 @media (max-width: 760px) {
     .topbar,
     .layout {
@@ -209,5 +237,10 @@ th {
 
     .layout {
         grid-template-columns: 1fr;
+    }
+
+    .row-actions,
+    .tax-form {
+        flex-wrap: wrap;
     }
 }

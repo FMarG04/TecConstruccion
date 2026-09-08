@@ -13,8 +13,14 @@ def product_service() -> ProductService:
 
 @web_bp.get("/")
 def index():
-    products = product_service().list_products()
-    return render_template("products/index.html", products=products)
+    service = product_service()
+    products = service.list_products()
+    inventory_value = service.calculate_inventory_value(products)
+    return render_template(
+        "products/index.html",
+        products=products,
+        inventory_value=inventory_value,
+    )
 
 
 @web_bp.post("/products")
@@ -74,5 +80,53 @@ def delete_product(product_id):
         flash("Producto eliminado correctamente.", "success")
     else:
         flash("Producto no encontrado.", "error")
+
+    return redirect(url_for("web.index"))
+
+
+@web_bp.post("/products/<int:product_id>/restock")
+def restock_product(product_id):
+    try:
+        product = product_service().restock_product(
+            product_id,
+            request.form.get("quantity", ""),
+        )
+        if product is None:
+            flash("Producto no encontrado.", "error")
+        else:
+            flash("Stock reabastecido correctamente.", "success")
+    except ValueError as error:
+        flash(str(error), "error")
+
+    return redirect(url_for("web.index"))
+
+
+@web_bp.post("/products/<int:product_id>/discount")
+def apply_discount(product_id):
+    try:
+        product = product_service().apply_discount(
+            product_id,
+            request.form.get("percentage", ""),
+        )
+        if product is None:
+            flash("Producto no encontrado.", "error")
+        else:
+            flash("Descuento aplicado correctamente.", "success")
+    except ValueError as error:
+        flash(str(error), "error")
+
+    return redirect(url_for("web.index"))
+
+
+@web_bp.post("/calculate-tax")
+def calculate_tax():
+    try:
+        price_with_tax = product_service().calculate_price_with_tax(
+            request.form.get("price", ""),
+            request.form.get("tax_rate", "18"),
+        )
+        flash(f"Precio con IGV: S/ {price_with_tax:.2f}", "success")
+    except ValueError as error:
+        flash(str(error), "error")
 
     return redirect(url_for("web.index"))

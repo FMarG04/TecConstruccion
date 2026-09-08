@@ -21,6 +21,7 @@
 
     <section class="panel">
         <h2>Productos</h2>
+        <p class="summary">Valor total del inventario: <strong>S/ {{ "%.2f"|format(inventory_value) }}</strong></p>
 
         {% if products %}
             <div class="table-wrap">
@@ -42,6 +43,14 @@
                                 <td>
                                     <div class="row-actions">
                                         <a class="button secondary" href="{{ url_for('web.edit_product', product_id=product.id) }}">Editar</a>
+                                        <form method="post" action="{{ url_for('web.restock_product', product_id=product.id) }}">
+                                            <input aria-label="Cantidad a reabastecer" name="quantity" type="number" min="1" step="1" required placeholder="Cantidad">
+                                            <button class="button secondary" type="submit">Reabastecer</button>
+                                        </form>
+                                        <form method="post" action="{{ url_for('web.apply_discount', product_id=product.id) }}">
+                                            <input aria-label="Porcentaje de descuento" name="percentage" type="number" min="0.01" max="99.99" step="0.01" required placeholder="% Dscto.">
+                                            <button class="button secondary" type="submit">Descontar</button>
+                                        </form>
                                         <form method="post" action="{{ url_for('web.delete_product', product_id=product.id) }}">
                                             <button class="button danger" type="submit">Eliminar</button>
                                         </form>
@@ -56,5 +65,14 @@
             <p class="empty">Todavia no hay productos registrados.</p>
         {% endif %}
     </section>
+</section>
+
+<section class="panel calculator">
+    <h2>Calculadora de IGV</h2>
+    <form class="tax-form" method="post" action="{{ url_for('web.calculate_tax') }}">
+        <input aria-label="Precio sin IGV" name="price" type="number" min="0.01" step="0.01" required placeholder="Precio sin IGV">
+        <input aria-label="Porcentaje de IGV" name="tax_rate" type="number" min="0" step="0.01" value="18" required>
+        <button type="submit">Calcular precio final</button>
+    </form>
 </section>
 {% endblock %}
