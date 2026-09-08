@@ -163,3 +163,27 @@ La aplicacion se inicia en `http://localhost:5000` y muestra el inventario de pr
 ### eliminar:
 
 ![Pantalla eliminar](img/eliminar.png)
+
+
+## Funciones stateful y stateless agregadas
+
+Se agregaron las siguientes funciones en `app/business/product_service.py`:
+
+### Funciones stateful
+
+Estas funciones modifican y guardan el estado de un producto en la base de datos.
+
+- **Reabastecer producto:** aumenta el stock de un producto existente y guarda el nuevo valor.
+- **Aplicar descuento:** reduce el precio de un producto según un porcentaje y guarda el precio actualizado.
+
+### Funciones stateless
+
+Estas funciones solo calculan un resultado; no modifican ni guardan datos.
+
+- **Calcular valor total del inventario:** suma el valor de cada producto (`precio × stock`).
+- **Calcular precio con IGV:** calcula el precio final a partir del precio base y el porcentaje de IGV indicado.
+
+
+
+
+
